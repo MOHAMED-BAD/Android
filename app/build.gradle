@@ -1,0 +1,67 @@
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+        config {
+            keyAlias 'key0'
+            keyPassword 'udacity'
+            storeFile file('$rootDir/keystore.jks')
+            storePassword 'udacity'
+        }
+    }
+    compileSdkVersion 25
+    buildToolsVersion "25.0.3"
+    defaultConfig {
+        applicationId "khaliliyoussef.builtitbigger"
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+    }
+    productFlavors {
+        paid {
+            applicationId 'khaliliyoussef.builtitbigger.flavors.paid'
+            buildConfigField "boolean", "PAID_VERSION", "true"
+        }
+        free {
+            applicationId 'khaliliyoussef.builtitbigger.flavors.free'
+            buildConfigField "boolean", "PAID_VERSION", "false"
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile project(path: ':backend', configuration: 'android-endpoints')
+
+    compile group: 'com.google.api-client', name: 'google-api-client', version: '1.22.0'
+    compile group: 'com.google.api-client', name: 'google-api-client-android', version: '1.22.0'
+    compile project(path: ':androidlib')
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.google.code.findbugs:jsr305:2.0.1'
+    freeCompile 'com.google.firebase:firebase-ads:10.0.1'
+    freeCompile 'com.google.android.gms:play-services-ads:10.0.1'
+    testCompile 'junit:junit:4.12'
+}
+
+
+
+
+
+
+
+
+
+apply plugin: 'com.google.gms.google-services'
